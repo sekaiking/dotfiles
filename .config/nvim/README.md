@@ -1,0 +1,1 @@
+Config satisfaction: ███████████░░░░░░░░░ 55% 
