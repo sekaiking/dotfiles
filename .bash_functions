@@ -1,15 +1,15 @@
 #!/bin/bash
 
-source "$SCRIPTS/9alam.sh"
+# source "$SCRIPTS/9alam.sh"
 
 canibuy () {
     whois "$1" 2>/dev/null | grep -q 'Registrant' && echo "taken" || echo "available"
 } && export -f canibuy
 
 # autojump and open dir in nvim
-jn() {
+zn() {
     if [[ ${1} == -* ]] && [[ ${1} != "--" ]]; then
-        autojump ${@}
+        z ${@}
         return
     fi
 
@@ -17,12 +17,12 @@ jn() {
     if [[ -d "${output}" ]]; then
         nvim "${output}"
     else
-        echo "autojump: directory '${@}' not found"
+        echo "zoxide: directory '${@}' not found"
         echo -e "\n${output}\n"
-        echo "Try \`autojump --help\` for more information."
+        echo "Try \`z --help\` for more information."
         false
     fi
-} && export -f jn
+} && export -f zn
 
 # clone 
 clone() {
@@ -45,3 +45,24 @@ clone() {
 	gh repo clone "$user/$name" -- --recurse-submodule
 	cd "$name"
 } && export -f clone
+
+function checksums {
+    for file in "$@"; do
+      local md5=($(md5sum $file))
+      local sha256=($(sha256sum $file))
+      echo "MD5 checksum: $md5"
+      echo "SHA-256 checksum: $sha256"
+    done
+}
+
+# download to Temp folder, then check sha256 if provided
+dl() {
+  local arg_url="$1"
+
+  last_downloaded="$(curl --remote-name --location --max-redirs 5 --output-dir $TEMP/dl -w "%{filename_effective}" "$arg_url")"
+
+  echo "~~~~~~~~~~~~~~~~"
+  checksums $last_downloaded
+  echo "~~~~~~~~~~~~~~~~"
+
+} && export -f dl

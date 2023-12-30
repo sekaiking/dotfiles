@@ -1,3 +1,5 @@
+export HOME="/home/834R"
+
 # If not running interactively, don't do anything
 case $- in *i*) ;; *) return;; esac
 
@@ -90,13 +92,13 @@ export NVM_DIR="$HOME/.nvm"
 
 # ~~~~~~~~~~~~~~~~~~ Path
 
-export PATH=$PATH:/opt/nvim/bin:/opt/gh/bin
+export PATH=$PATH:/opt/nvim/bin:/opt/gh/bin:/opt/ohmyposh/bin:/opt/eza/bin:/opt/zoxide/bin
 
 # ~~~~~~~~~~~~~~~~~~ Variables 
 
 export NOTES="$HOME/9alam"
 export REPOS="$HOME/Repos"
-export TEMP="$HOME/Temp"
+export TEMP="$HOME/Tmp"
 export SCRIPTS="$HOME/Scripts"
 
 # ~~~~~~~~~~~~~~~~~~ Load Bash Files 
@@ -105,7 +107,17 @@ bash_files=(".bash_aliases" ".bash_functions")
 for file in "${bash_files[@]}"
 do
   if [[ -f "$file" ]]; then
-    . "$file"
+    source "$file"
   fi
 done
 
+# ~~~~~~~~~~~~~~~~~~ Welcome Message
+neofetch
+
+# ~~~~~~~~~~~~~~~~~~ Pretty Terminal
+eval "$(oh-my-posh init bash --config ~/.config/theme.omp.json)"
+
+
+export EZA_COLORS='di=38;5;87:ln=38;5;75:so=38;5;176:pi=38;5;135:ex=38;5;32:bd=38;5;87:cd=38;5;87:su=38;5;160:sg=38;5;160:tw=38;5;222:ow=38;5;222'
+
+eval "$(zoxide init bash)"
