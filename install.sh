@@ -31,12 +31,20 @@ download() {
   }
 
   TEMP="$HOME/.install_temp/"
-  mkdir "$TEMP"
+
+  if ! [[ -d "$TEMP" ]]; then
+    mkdir "$TEMP"
+  fi
 
   install_package() {
     package=$1
 
     if command -v $package &> /dev/null; then
+      echo "$package is already installed. Skipping..."
+      return
+    fi
+
+    if [[ -f /opt/$package/bin/$package ]]; then
       echo "$package is already installed. Skipping..."
       return
     fi
@@ -60,18 +68,12 @@ download() {
         sudo apt-get install -y git
         ;;
       "gh")
-        if [[ -f /opt/gh/bin/gh ]]; then
-          return
-        fi
         download https://github.com/cli/cli/releases/download/v2.40.1/gh_2.40.1_linux_amd64.tar.gz "$TEMP/gh.tar.gz"
         tar xzf "$TEMP/gh.tar.gz" -C "$TEMP"
         sudo cp -r "$TEMP/gh_2.40.1_linux_amd64" "/opt/gh"
         sudo chmod +x /opt/gh/bin/gh
         ;;
       "zoxide")
-        if [[ -f /opt/zoxide/bin/zoxide ]]; then
-          return
-        fi
         sudo apt-get install -y fzf
         curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash 
         sudo mkdir -p /opt/zoxide/bin/
@@ -81,33 +83,33 @@ download() {
         sudo apt-get install -y neofetch
         ;;
       "oh-my-posh")
-        if [[ -f /opt/ohmyposh/bin/oh-my-posh ]]; then
-          return
-        fi
         sudo apt-get install -y unzip
-        sudo mkdir -p /opt/ohmyposh/bin
-        curl -s https://ohmyposh.dev/install.sh | bash -s -- -d /opt/ohmyposh/bin
-        sudo chmod +x /opt/ohmyposh/bin/oh-my-posh
+        sudo mkdir -p /opt/oh-my-posh/bin
+        curl -s https://ohmyposh.dev/install.sh | bash -s -- -d /opt/oh-my-posh/bin
+        sudo chmod +x /opt/oh-my-posh/bin/oh-my-posh
         ;;
       "whois")
         sudo apt-get install -y whois
         ;;
       "eza")
-        if [[ -f /opt/eza/bin/eza ]]; then
-          return
-        fi
         download https://github.com/eza-community/eza/releases/download/v0.17.0/eza_x86_64-unknown-linux-gnu.tar.gz "$TEMP/eza.tar.gz" 26bdfda62ed514598397aeb729ed611c14b1bcab85e7e0fd8226498d1cf87295
         tar xzf "$TEMP/eza.tar.gz" -C "$TEMP"
         sudo mkdir -p /opt/eza/bin
         sudo cp "$TEMP/eza" /opt/eza/bin/eza
         ;;
+      "go")
+        download https://go.dev/dl/go1.21.5.linux-amd64.tar.gz "$TEMP/go.tar.gz" e2bc0b3e4b64111ec117295c088bde5f00eeed1567999ff77bc859d7df70078e
+        sudo mkdir -p /opt/go
+        sudo rm -rf /opt/go 
+        tar xzf "$TEMP/go.tar.gz" -C "$TEMP"
+        sudo cp -r "$TEMP/go" /opt/go
     esac
   }
 
 
-  always_installed=("curl" "nvim" "git" "gh" "zoxide" "neofetch" "oh-my-posh" "whois" "eza")
+  always_installed=("curl" "nvim" "git" "gh" "zoxide" "neofetch" "oh-my-posh" "whois" "eza" "go")
 
-  optional_packages=("go" "nvm" "node" "rust")
+  optional_packages=("nvm" "node" "rust")
 
 
   for package in "${always_installed[@]}"; do
@@ -138,4 +140,5 @@ download() {
 
 sudo rm -rf "$TEMP"
 
+echo ""
 echo "~~~~~~~~~~~~~~~~~~~~ Installation complete ~~~~~~~~~~~~~~~~~~~~~~~~"

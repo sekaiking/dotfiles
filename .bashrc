@@ -87,12 +87,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-[[ -s /home/834R/.autojump/etc/profile.d/autojump.sh ]] && source /home/834R/.autojump/etc/profile.d/autojump.sh
-
-
 # ~~~~~~~~~~~~~~~~~~ Path
 
-export PATH=$PATH:/opt/nvim/bin:/opt/gh/bin:/opt/ohmyposh/bin:/opt/eza/bin:/opt/zoxide/bin
+export PATH=$PATH:/opt/nvim/bin:/opt/gh/bin:/opt/oh-my-posh/bin:/opt/eza/bin:/opt/zoxide/bin:/opt/go/bin
 
 # ~~~~~~~~~~~~~~~~~~ Variables 
 
