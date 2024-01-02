@@ -12,13 +12,13 @@ alias seeu="/mnt/c/Windows/System32/shutdown.exe /h"
 
 alias so="source ~/.bashrc"
 
-alias ..="cd .."
+alias ..="z .."
 
 if [[ -f '/opt/eza/bin/eza' ]]; then
   alias ls='/opt/eza/bin/eza --icons'
 fi
 
 alias l='ls -lF'
-alias lt='l -TL 2'
+alias lt='l -TL'
 alias ll='ls -alF'
-alias llt='ll -TL 2'
+alias llt='ll -TL'

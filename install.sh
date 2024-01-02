@@ -103,11 +103,15 @@ download() {
         sudo rm -rf /opt/go 
         tar xzf "$TEMP/go.tar.gz" -C "$TEMP"
         sudo cp -r "$TEMP/go" /opt/go
+        ;;
+      "tmux")
+        sudo apt-get install -y tmux
+        ;;
     esac
   }
 
 
-  always_installed=("curl" "nvim" "git" "gh" "zoxide" "neofetch" "oh-my-posh" "whois" "eza" "go")
+  always_installed=("curl" "nvim" "git" "gh" "zoxide" "neofetch" "oh-my-posh" "whois" "eza" "go" "tmux")
 
   optional_packages=("nvm" "node" "rust")
 

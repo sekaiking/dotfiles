@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# source "$SCRIPTS/9alam.sh"
+source "$SCRIPTS/9alam.sh"
 
 canibuy () {
     whois "$1" 2>/dev/null | grep -q 'Registrant' && echo "taken" || echo "available"

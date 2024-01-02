@@ -108,13 +108,16 @@ do
   fi
 done
 
-# ~~~~~~~~~~~~~~~~~~ Welcome Message
-neofetch
+# ~~~~~~~~~~~~~~~~~~ Welcome
 
-# ~~~~~~~~~~~~~~~~~~ Pretty Terminal
+if ! [[ -v TMUX ]]; then
+  neofetch
+fi
+
 eval "$(oh-my-posh init bash --config ~/.config/theme.omp.json)"
-
 
 export EZA_COLORS='di=38;5;87:ln=38;5;75:so=38;5;176:pi=38;5;135:ex=38;5;32:bd=38;5;87:cd=38;5;87:su=38;5;160:sg=38;5;160:tw=38;5;222:ow=38;5;222'
 
 eval "$(zoxide init bash)"
+
+
