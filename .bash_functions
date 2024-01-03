@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source "$SCRIPTS/9alam.sh"
+if [[ -f "$SCRIPTS/9alam.sh" ]]; then
+  source "$SCRIPTS/9alam.sh"
+fi
 
 canibuy () {
     whois "$1" 2>/dev/null | grep -q 'Registrant' && echo "taken" || echo "available"
